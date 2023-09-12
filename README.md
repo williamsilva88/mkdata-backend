@@ -1,7 +1,7 @@
 # Projeto backend Java
 
 ## Sobre o projeto
-- O projeto serve de APIRest para gerenciamento de importações e exportações de dados de cobrança e atendimento via arquivos.
+- O projeto de teste MKDATA para cadastro de clientes
 
 ## Módulos utilizados
 - java 1.8
@@ -19,8 +19,7 @@
 - Ao abrir o projeto o intellij idêntifica que é um projeto spring boot e vai disponibilizar para executar após o maven realizar o download de dependências.
 
 ## Testes automatizados
-- Utilizado Junit + Mockito
-- Pode ser executado via intellij ou de forma manual via comando
+- Não implementado
 
 ## Build
 - Pode ser feito no intellij, aplicar o parâmetro `-Dspring.profiles.active=production`. 
