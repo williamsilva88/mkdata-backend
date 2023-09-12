@@ -2,8 +2,8 @@ package com.api.mkdata.domain.dao;
 
 import com.api.mkdata.domain.DTO.ClienteFiltroDTO;
 import com.api.mkdata.domain.entity.Cliente;
+import com.api.mkdata.domain.entity.Contato;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -18,24 +18,18 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class ClienteDao {
+public class ContatoDao {
 
     @PersistenceContext(name = "JPA_DEMO", type = PersistenceContextType.TRANSACTION)
     EntityManager em;
 
-    public List<Cliente> findClientsFiltro(ClienteFiltroDTO filtro){
+    public List<Contato> findClientsByClient(Long clientId){
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Cliente> cq = cb.createQuery(Cliente.class);
-        Root<Cliente> root = cq.from(Cliente.class);
+        CriteriaQuery<Contato> cq = cb.createQuery(Contato.class);
+        Root<Contato> root = cq.from(Contato.class);
 
         List<Predicate> listPredicates = new ArrayList<>();
-
-        if(filtro.getNome() != null){
-            listPredicates.add(cb.like(cb.upper(root.get("nome")), "%"+filtro.getNome().toUpperCase()+"%"));
-        }
-        if(filtro.getAtivo() != null){
-            listPredicates.add(cb.equal(root.get("ativo"), filtro.getAtivo()));
-        }
+        listPredicates.add(cb.equal(root.get("cliId"), clientId));
         cq.where(cb.and(listPredicates.toArray(new Predicate[listPredicates.size()])));
 
         return em.createQuery(cq).getResultList();

@@ -1,6 +1,5 @@
 package com.api.mkdata.domain.entity;
 
-import com.api.mkdata.domain.DTO.ClienteDTO;
 import com.api.mkdata.domain.DTO.ContatoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,26 +29,27 @@ public class Contato {
     @Column(name="con_telefone", nullable = false)
     private String telefone;
 
-    @ManyToOne(optional = false, cascade = {CascadeType.ALL, CascadeType.REFRESH})
-    @JoinColumn(name = "cli_id", foreignKey = @ForeignKey(name = "contato_fk_cli_id"))
-    private Cliente cliente;
+    @JoinColumn(name = "cli_id")
+    private Long cliId;
 
-    public ContatoDTO toContato(ClienteDTO cli){
+    public ContatoDTO toContato(){
         ContatoDTO c = new ContatoDTO();
         if(this.getDescricao() != null || this.getTelefone() != null){
-            return new ContatoDTO(this.getId(), this.getDescricao(), this.getTelefone(), cli);
+            return new ContatoDTO(this.getId(), this.getDescricao(), this.getTelefone(), this.getCliId());
         }
         return c;
     }
 
-    public static List<ContatoDTO> toContato(List<Contato> contato, ClienteDTO cli){
+    public static List<ContatoDTO> toContato(List<Contato> contato){
         List<ContatoDTO> c = new ArrayList<>();
-        contato.forEach(con->{
-            ContatoDTO novoContato = con.toContato(cli);
-            if(novoContato != null){
-                c.add(novoContato);
-            }
-        });
+        if(contato != null){
+            contato.forEach(con->{
+                ContatoDTO novoContato = con.toContato();
+                if(novoContato != null){
+                    c.add(novoContato);
+                }
+            });
+        }
         return c;
     }
 }

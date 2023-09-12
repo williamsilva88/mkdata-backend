@@ -12,9 +12,9 @@ public class BooleanConverter implements AttributeConverter<Boolean, Integer> {
 
     @Override
     public Boolean convertToEntityAttribute(Integer i) {
-        if( i == 0 )
+        if( i == 1 )
             return true;
-        else if( i == 1 )
+        else if( i == 0 )
             return false;
 
         return null;

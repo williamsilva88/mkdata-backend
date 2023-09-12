@@ -5,6 +5,8 @@ import com.api.mkdata.domain.DTO.ClienteFiltroDTO;
 import com.api.mkdata.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,14 +42,9 @@ public class ClienteRest {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Object> deleteClient(@PathVariable("id") Long id){
-        try {
-            clienteService.deleteClients(id);
-            return ResponseEntity.ok().body(new Object());
-        }catch (Exception e){
-            return ResponseEntity.ok().body(new Object());
-        }
-
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteClient(@PathVariable("id") Long id){
+        clienteService.deleteClients(id);
     }
 
 }

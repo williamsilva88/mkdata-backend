@@ -26,13 +26,13 @@ public class Cliente {
     @Column(name="cli_id")
     private Long id;
 
-    @Column(name="cli_nome")
+    @Column(name="cli_nome", nullable = false)
     private String nome;
 
-    @Column(name="cli_tipo")
+    @Column(name="cli_tipo", nullable = false)
     private String tipo;
 
-    @Column(name="cli_cpf_cnpj")
+    @Column(name="cli_cpf_cnpj", nullable = false)
     private String documento;
 
     @Column(name="cli_rg_ie")
@@ -45,9 +45,6 @@ public class Cliente {
     @Convert(converter = BooleanConverter.class)
     private Boolean ativo;
 
-    @OneToMany(mappedBy = "cliente", cascade = {CascadeType.ALL, CascadeType.REFRESH}, orphanRemoval = true)
-    private List<Contato> telefones;
-
     public ClienteDTO toClienteDto(){
         ClienteDTO c = new ClienteDTO();
         c.setId(this.getId());
@@ -57,7 +54,7 @@ public class Cliente {
         c.setRgOuIe(this.getRgOuIe());
         c.setDataCadastro(this.getDataCadastro());
         c.setAtivo(this.getAtivo());
-        c.setTelefones(Contato.toContato(this.telefones, c));
+        c.setTelefones(new ArrayList<>());
         return c;
     }
 

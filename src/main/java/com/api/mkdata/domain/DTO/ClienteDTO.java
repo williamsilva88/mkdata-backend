@@ -34,15 +34,16 @@ public class ClienteDTO {
         c.setRgOuIe(this.getRgOuIe());
         c.setDataCadastro(this.getDataCadastro());
         c.setAtivo(this.getAtivo());
-        c.setTelefones(ContatoDTO.toContato(this.telefones, c));
         return c;
     }
 
     public static List<Cliente> toCliente(List<ClienteDTO> clientes){
         List<Cliente> c = new ArrayList<>();
-        clientes.forEach(cli->{
-            c.add(cli.toCliente());
-        });
+        if(clientes != null){
+            clientes.forEach(cli->{
+                c.add(cli.toCliente());
+            });
+        }
         return c;
     }
 }
